@@ -29,11 +29,11 @@ jobs:
       - name: Configurar Node
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
           cache: 'npm'
           
       - name: Instalar dependencias
-        run: npm ci
+        run: rm -rf node_modules package-lock.json && npm install
         
       - name: Construir proyecto
         run: npm run build
