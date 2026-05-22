@@ -1,0 +1,62 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Se ejecuta al hacer push a la rama main
+  push:
+    branches: ["main", "master"]
+  # Permite ejecutar el workflow manualmente desde Actions tab
+  workflow_dispatch:
+
+# Otorga permisos para desplegar en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Previene ejecuciones concurrentes
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # Trabajo de construcción
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          
+      - name: Instalar dependencias
+        run: npm ci
+        
+      - name: Construir proyecto
+        run: npm run build
+        
+      - name: Ajustar base path de Vite para GitHub Pages
+        run: |
+          # Solo necesario si el repo no es nombre-usuario.github.io
+          echo "Si el repositorio no es la raiz, asegúrate de configurar 'base' en vite.config.ts"
+          
+      - name: Subir artefactos
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+  # Trabajo de despliegue
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+      - name: Desplegar a GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
