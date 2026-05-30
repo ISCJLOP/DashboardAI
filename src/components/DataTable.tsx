@@ -53,6 +53,11 @@ export function DataTable({ data }: { data: DocumentData[] }) {
                       <CheckCircle className="w-3.5 h-3.5" />
                       Humano Correcto
                     </div>
+                  ) : row.clasificacion === 'IA Detectada' ? (
+                    <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-900/20 border border-violet-500/20 text-violet-400 text-xs font-medium shadow-[0_0_10px_rgba(139,92,246,0.1)]">
+                      <CheckCircle className="w-3.5 h-3.5" />
+                      IA Detectada
+                    </div>
                   ) : (
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-900/20 border border-rose-500/20 text-rose-400 text-xs font-medium shadow-[0_0_10px_rgba(244,63,94,0.1)]">
                       <AlertTriangle className="w-3.5 h-3.5" />

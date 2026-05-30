@@ -57,24 +57,19 @@ const PIE_COLORS = ['#06b6d4', '#d946ef'];
 export function ChartsPanel({ data }: { data: DocumentData[] }) {
   // Aggregate data for BarChart (Total Docs by Detection Classification)
   const correctlyClassifiedHuman = data.filter(d => d.clasificacion === 'Humano Correcto').length;
+  const correctlyClassifiedAI = data.filter(d => d.clasificacion === 'IA Detectada').length;
   const incorrectlyClassifiedAI = data.filter(d => d.clasificacion === 'Falso Negativo').length;
   
   const barData = [
     { name: 'Humano Correcto', count: correctlyClassifiedHuman, fill: '#06b6d4' },
-    { name: 'Falso Negativo (Falló en detectar IA)', count: incorrectlyClassifiedAI, fill: '#d946ef' },
-  ];
-
-  // Aggregate Data for PieChart (Current filtered view Distribution)
-  const humanDocs = data.filter(d => d.grupo === 'Control').length;
-  const aiDocs = data.filter(d => d.grupo === 'Generados').length;
-  const pieData = humanDocs === 0 && aiDocs === 0 ? [] : [
-    { name: 'Humano (Control)', value: humanDocs },
-    { name: 'IA (Experimental)', value: aiDocs },
-  ].filter(d => d.value > 0);
+    { name: 'IA Detectada (Correcto)', count: correctlyClassifiedAI, fill: '#8b5cf6' },
+    { name: 'Falso Negativo (Error)', count: incorrectlyClassifiedAI, fill: '#f43f5e' },
+  ].filter(d => d.count > 0);
 
   // Scatter Chart data mapping
   const scatterControl = data.filter(d => d.grupo === 'Control').map((d, i) => ({ x: parseInt(d.id.split('-')[1]), y: d.porcentajeIA, id: d.id, name: 'Control (Humano)' }));
-  const scatterAI = data.filter(d => d.grupo === 'Generados').map((d, i) => ({ x: parseInt(d.id.split('-')[1]) + 30, y: d.porcentajeIA, id: d.id, name: 'Generado (IA)' }));
+  const scatterCP = data.filter(d => d.grupo === 'Generados CP').map((d, i) => ({ x: parseInt(d.id.replace('IA-CP', '')) + 30, y: d.porcentajeIA, id: d.id, name: 'IA con Prompt (CP)' }));
+  const scatterSP = data.filter(d => d.grupo === 'Generados SP').map((d, i) => ({ x: parseInt(d.id.replace('IA-SP', '')) + 60, y: d.porcentajeIA, id: d.id, name: 'IA sin modificar (SP)' }));
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
@@ -117,20 +112,17 @@ export function ChartsPanel({ data }: { data: DocumentData[] }) {
       <div className="bg-slate-900/40 backdrop-blur-md border border-slate-800 rounded-2xl p-6 shadow-lg shadow-black/20">
         <h3 className="font-display font-medium text-lg text-slate-200 mb-6">Dispersión Empírica (% IA Detectado)</h3>
         <div className="h-64 w-full relative">
-          {/* Fondo indicativo */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-10">
-            <span className="text-4xl font-display font-bold text-slate-400 rotate-[-15deg]">Colapso en Línea Base</span>
-          </div>
           <ResponsiveContainer width="100%" height="100%">
             <ScatterChart margin={{ top: 10, right: 20, bottom: 10, left: -20 }}>
               <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
               <XAxis type="number" dataKey="x" name="Índice" stroke="#94a3b8" fontSize={12} domain={['dataMin - 1', 'dataMax + 1']} tickLine={false} axisLine={false} />
-              <YAxis type="number" dataKey="y" name="% Detectado IA" stroke="#94a3b8" fontSize={12} domain={[-5, 10]} tickLine={false} axisLine={false} />
+              <YAxis type="number" dataKey="y" name="% Detectado IA" stroke="#94a3b8" fontSize={12} domain={[-5, 105]} tickLine={false} axisLine={false} />
               <ZAxis type="number" range={[50, 50]} />
               <RechartsTooltip cursor={{ strokeDasharray: '3 3' }} content={<CustomTooltip />} />
               <Legend wrapperStyle={{ fontSize: '12px' }} />
               <Scatter name="Control (Humano)" data={scatterControl} fill="#06b6d4" shape="circle" />
-              <Scatter name="IA (Falso Negativo)" data={scatterAI} fill="#d946ef" shape="triangle" />
+              <Scatter name="IA con Prompt (CP)" data={scatterCP} fill="#d946ef" shape="triangle" />
+              <Scatter name="IA sin modificar (SP)" data={scatterSP} fill="#f59e0b" shape="diamond" />
             </ScatterChart>
           </ResponsiveContainer>
         </div>

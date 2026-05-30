@@ -11,23 +11,28 @@ export default function Dashboard() {
 
   const filteredData = useMemo(() => {
     if (filter === 'Humanos') return studyData.filter(d => d.grupo === 'Control');
-    if (filter === 'IA') return studyData.filter(d => d.grupo === 'Generados');
+    if (filter === 'IA (Todos)') return studyData.filter(d => d.grupo.startsWith('Generados'));
+    if (filter === 'IA (CP)') return studyData.filter(d => d.grupo === 'Generados CP');
+    if (filter === 'IA (SP)') return studyData.filter(d => d.grupo === 'Generados SP');
     return studyData;
   }, [filter]);
 
   const kpis: KpiMetrics = useMemo(() => {
     const total = filteredData.length;
     const totalHumanos = filteredData.filter(d => d.grupo === 'Control').length;
-    const totalIA = filteredData.filter(d => d.grupo === 'Generados').length;
+    const totalIA = filteredData.filter(d => d.grupo.startsWith('Generados')).length;
     
     // Exact statistics derived directly from dataset
-    const correctos = filteredData.filter(d => d.clasificacion === 'Humano Correcto').length;
+    const correctosHumanos = filteredData.filter(d => d.clasificacion === 'Humano Correcto').length;
+    const detectadosIA = filteredData.filter(d => d.clasificacion === 'IA Detectada').length;
     const falsosNegativos = filteredData.filter(d => d.clasificacion === 'Falso Negativo').length;
     
-    const precisionTotal = total === 0 ? 0 : (correctos / total) * 100;
-    const exactitudHumanos = totalHumanos === 0 ? 0 : (correctos / totalHumanos) * 100; // All hits in this study were human predictions
-    const sensibilidad = totalIA === 0 ? 0 : 0; // AI correctly identified is 0
-    const promedioIA = 0; // The core finding: the detector output was 0% across the board
+    const precisionTotal = total === 0 ? 0 : ((correctosHumanos + detectadosIA) / total) * 100;
+    const exactitudHumanos = totalHumanos === 0 ? 0 : (correctosHumanos / totalHumanos) * 100;
+    const sensibilidad = totalIA === 0 ? 0 : (detectadosIA / totalIA) * 100;
+
+    const sumaPorcentajeIA = filteredData.reduce((acc, curr) => acc + curr.porcentajeIA, 0);
+    const promedioIA = total === 0 ? 0 : sumaPorcentajeIA / total;
 
     return {
       totalHumanos,
@@ -57,7 +62,7 @@ export default function Dashboard() {
           Evaluación de Quillbot como Detector Inteligencia Artificial
         </h1>
         <p className="text-slate-400 text-lg max-w-4xl leading-relaxed">
-          Evaluación crítica del detector generativo comercial Quillbot frente a textos sintéticos modernos. El análisis constata un colapso algorítmico del sistema (100% tasa de falsos negativos) como árbitro imparcial. Las conclusiones se enmarcan en los principios internacionales de libre expresión de Chapultepec y Heredia.
+          Evaluación de la herramienta Quillbot para detectar textos creados con Inteligencia Artificial. El análisis demuestra cómo el sistema falla dramáticamente al detectar textos de IA que fueron apenas modificados. Estas fallas se analizan desde la perspectiva de la libre expresión bajo los Principios de Chapultepec y la Declaración de Heredia.
         </p>
       </header>
 
@@ -70,8 +75,8 @@ export default function Dashboard() {
           <Filter className="w-5 h-5 text-slate-400" />
           <span className="text-slate-300 font-medium">Controles de Cohorte:</span>
         </div>
-        <div className="flex gap-2">
-          {(['Todos', 'Humanos', 'IA'] as FilterOption[]).map(opt => (
+        <div className="flex gap-2 flex-wrap">
+          {(['Todos', 'Humanos', 'IA (Todos)', 'IA (CP)', 'IA (SP)'] as FilterOption[]).map(opt => (
             <button
               key={opt}
               onClick={() => setFilter(opt)}
@@ -81,7 +86,11 @@ export default function Dashboard() {
                   : 'bg-slate-800/50 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-700/50'
               }`}
             >
-              {opt === 'Todos' ? 'Contexto Global' : opt === 'Humanos' ? 'Control (Humanos)' : 'Experimental (IA)'}
+              {opt === 'Todos' ? 'Contexto Global' : 
+               opt === 'Humanos' ? 'Control (Humanos)' : 
+               opt === 'IA (Todos)' ? 'Experimental IA (Todos)' :
+               opt === 'IA (CP)' ? 'Con Parafraseo y Prompt (CP)' :
+               'Sin Parafrasear (SP)'}
             </button>
           ))}
         </div>

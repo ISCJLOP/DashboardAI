@@ -1,6 +1,6 @@
-export type GroupType = 'Control' | 'Generados';
-export type OriginType = 'Humano (Pre-2022)' | '100% IA';
-export type ClassificationType = 'Humano Correcto' | 'Falso Negativo';
+export type GroupType = 'Control' | 'Generados CP' | 'Generados SP';
+export type OriginType = 'Humano (Pre-2022)' | '100% IA CP' | '100% IA SP';
+export type ClassificationType = 'Humano Correcto' | 'Falso Negativo' | 'IA Detectada';
 
 export interface DocumentData {
   id: string;
@@ -10,7 +10,7 @@ export interface DocumentData {
   clasificacion: ClassificationType;
 }
 
-export type FilterOption = 'Todos' | 'Humanos' | 'IA';
+export type FilterOption = 'Todos' | 'Humanos' | 'IA (Todos)' | 'IA (CP)' | 'IA (SP)';
 
 export interface KpiMetrics {
   promedioIA: number;
@@ -21,3 +21,4 @@ export interface KpiMetrics {
   exactitudHumanos: number;
   falsosNegativos: number;
 }
+

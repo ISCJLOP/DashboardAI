@@ -9,7 +9,7 @@ export function ContextCards() {
           <h3 className="font-display font-semibold text-lg">Objetivo del Estudio</h3>
         </div>
         <p className="text-slate-400 text-sm leading-relaxed">
-          Evaluar el rendimiento y validez empírica de la plataforma de detección IA Quillbot frente a conjuntos de textos humanos y sintéticos.
+          Evaluar qué tan bien funciona realmente la plataforma Quillbot para detectar textos escritos por Inteligencia Artificial, comparando textos humanos reales con textos generados por IA.
         </p>
       </div>
 
@@ -19,7 +19,7 @@ export function ContextCards() {
           <h3 className="font-display font-semibold text-lg">Diseño Experimental</h3>
         </div>
         <p className="text-slate-400 text-sm leading-relaxed">
-          Análisis de 60 documentos: 30 textos humanos pre-2022 (grupo control) evaluados contra 30 documentos generados 100% mediante modelos de IA.
+          Se analizaron 70 documentos en total: 30 textos humanos pre-2022, frente a 30 documentos generados por IA con parafraseo usando Ingeniería de Prompt (CP) y 10 documentos IA sin parafrasear, tal cual salieron del modelo (SP).
         </p>
       </div>
 
@@ -29,7 +29,7 @@ export function ContextCards() {
           <h3 className="font-display font-semibold text-lg">Resultados de Quillbot</h3>
         </div>
         <p className="text-slate-400 text-sm leading-relaxed">
-          Eficacia del 100% en identificar textos humanos, pero fracaso total (0%) en detectar textos generados por IA, produciendo 30 falsos negativos consecutivos.
+          Fue perfecta reconociendo textos humanos y aquellos de IA sin modificaciones (SP). Sin embargo, falló en detectar casi todos los textos de IA a los que se les aplicó parafraseo mediante Ingeniería de Prompt (CP).
         </p>
       </div>
 
@@ -39,7 +39,7 @@ export function ContextCards() {
           <h3 className="font-display font-semibold text-lg">Interpretación</h3>
         </div>
         <p className="text-slate-400 text-sm leading-relaxed">
-          Quillbot enfrenta un colapso predictivo ante IA moderna. Las severas tasas de falsos negativos invalidan su uso como mecanismo auditor exclusivo.
+          Quillbot se confunde fácilmente cuando el texto pasa por modificaciones usando instrucciones de Ingeniería de Prompt (CP). Su alta cantidad de errores demuestra que no debería usarse como juez definitivo.
         </p>
       </div>
     </div>
@@ -56,29 +56,29 @@ export function AnalyticInsights() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-4">
           <div className="border-l-2 border-indigo-500 pl-4">
-            <h4 className="text-slate-200 font-medium mb-1">Invisibilidad Estadística (Gráfica Comparativa)</h4>
+            <h4 className="text-slate-200 font-medium mb-1">Efecto de modificar el texto (CP vs SP)</h4>
             <p className="text-slate-400 text-sm leading-relaxed">
-              La métrica de detección en Quillbot se mantiene inalterada (0.00%) tanto en el grupo control como en el experimental. Esto corrobora que la sofisticación semántica del modelo generativo moderno es estadísticamente indistinguible de la escritura humana para este algoritmo en particular.
+              El detector marca 0% tanto para textos creados por humanos como para textos generados por IA a los que se les aplicó parafraseo por Ingeniería de Prompt (CP). Sin embargo, detecta casi todos los textos de IA sin parafrasear (SP). Esto significa que Quillbot reconoce patrones repetitivos, pero se vuelve ciego si el texto se ajusta con instrucciones.
             </p>
           </div>
           <div className="border-l-2 border-fuchsia-500 pl-4">
-            <h4 className="text-slate-200 font-medium mb-1">Colapso de Sensibilidad (Dispersión)</h4>
+            <h4 className="text-slate-200 font-medium mb-1">Inconsistencia en la detección (Dispersión)</h4>
             <p className="text-slate-400 text-sm leading-relaxed">
-              La gráfica de dispersión refleja una anomalía severa: una asimetría metodológica total en Quillbot. La especificidad (identificar humanos) es perfecta, pero la sensibilidad (identificar IA) es nula. Esta ilusión de exactitud está fuertemente sesgada por el grupo control.
+              La gráfica de puntos muestra dos realidades: el sistema es muy bueno atrapando textos de IA sin parafrasear (SP), pero falla por completo ante técnicas de Ingeniería de Prompt (CP). La supuesta precisión del sistema se rompe por completo al reestructurar el texto base.
             </p>
           </div>
         </div>
         <div className="space-y-4">
           <div className="border-l-2 border-rose-500 pl-4">
-            <h4 className="text-slate-200 font-medium mb-1">Limitaciones del Detector</h4>
+            <h4 className="text-slate-200 font-medium mb-1">Los peligros de confiar ciegamente</h4>
             <p className="text-slate-400 text-sm leading-relaxed">
-              La incapacidad de Quillbot para detectar firmas semánticas de nuevos LLMs significa que la herramienta opera basándose en heurísticas posiblemente anticuadas, generando confianza artificial ("false security") en procesos que requieren supervisión.
+              La facilidad con la que se burla a Quillbot al usar Ingeniería de Prompt (CP) nos muestra que estos programas no "entienden" el sentido, solo buscan las palabras que más repite la IA. Esto crea una falsa sensación de seguridad e impide que se usen como prueba definitiva.
             </p>
           </div>
           <div className="border-l-2 border-cyan-500 pl-4">
-            <h4 className="text-slate-200 font-medium mb-1">Impacto Sistémico de Falsos Negativos</h4>
+            <h4 className="text-slate-200 font-medium mb-1">El problema de los falsos negativos</h4>
             <p className="text-slate-400 text-sm leading-relaxed">
-              30 falsos negativos en una cohorte de 30 documentos sintéticos advierten que la efectividad funcional de Quillbot en entornos "wild" (fuera de laboratorio) no reporta utilidad probabilística superior al mero azar para contenido generado recintemente.
+              La gran cantidad de textos de IA que pasaron como "humanos" gracias al parafraseo intencional (CP) advierte que, en la vida real, este detector terminaría castigando sobre todo a estudiantes inexpertos, dejando pasar fácilmente a quienes saben usar Ingeniería de Prompt.
             </p>
           </div>
         </div>
@@ -104,17 +104,17 @@ export function EthicsSection() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10 mb-10">
         <div className="bg-slate-900/70 border border-slate-700/50 rounded-xl p-6 relative overflow-hidden">
           <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
-          <h3 className="text-lg font-display font-semibold text-slate-100 mb-3">La Declaración de Chapultepec</h3>
+          <h3 className="text-lg font-display font-semibold text-slate-100 mb-3">Los Principios de Chapultepec</h3>
           <p className="text-slate-400 text-sm leading-relaxed focus:text-slate-300">
-            Enraizada en la protección irrestricta a la libertad de expresión, la Declaración prohíbe mecanismos que censuren o restrinjan el flujo de información por "medios indirectos". Al utilizar un algoritmo que emite juicios inexactos (como Quillbot, carente de sensibilidad probada) como censor de facto sobre el trabajo de autores, investigadores o comunicadores, se establece una barrera artificial e injustificada al libre pensamiento, violando el principio 5 ("La censura previa, las restricciones a la circulación... se oponen directamente a la libertad de prensa").
+            Basados en la protección a la libertad de expresión, los Principios prohíben mecanismos que restrinjan el flujo de información por "medios indirectos". Al usar un algoritmo que comete tantos errores (como Quillbot) para juzgar y quizás censurar el trabajo de autores, investigadores o estudiantes, se crea una barrera injusta al libre pensamiento. Esto va en contra del principio 5 sobre evitar la censura previa o restricciones a la circulación de las ideas.
           </p>
         </div>
 
         <div className="bg-slate-900/70 border border-slate-700/50 rounded-xl p-6 relative overflow-hidden">
            <div className="absolute top-0 left-0 w-1 h-full bg-rose-500"></div>
-          <h3 className="text-lg font-display font-semibold text-slate-100 mb-3">Los Principios de Heredia</h3>
+          <h3 className="text-lg font-display font-semibold text-slate-100 mb-3">La Declaración de Heredia</h3>
           <p className="text-slate-400 text-sm leading-relaxed">
-            Diseñados para prevenir consecuencias civiles desproporcionadas frente al ejercicio de la expresión, los Principios de Heredia dictan que las sanciones deben ser justas y basadas en el dolo manifiesto (malicia real). Emplear una inteligencia artificial predictiva (cuyo resultado es esencialmente azaroso para textos IA en este estudio) para acusar académicamente u hostigar a un autor viola la proporcionalidad y el debido proceso garantizado en estos principios. No se puede sancionar penal, civil ni académicamente con base en "evidencia" generada por un software comprobablemente fallido.
+            Diseñada para evitar castigos exagerados por expresarse, la Declaración de Heredia indica que las sanciones deben ser justas y solo aplicarse cuando hay mala intención comprobada. Usar una herramienta automática (cuyos resultados varían tanto y fallan fácilmente frente a textos modificados) para acusar o castigar a un estudiante o autor va en contra de estos derechos. No se debería castigar a nadie basándose en la precaria "evidencia" de un software que se equivoca tanto.
           </p>
         </div>
       </div>
@@ -122,26 +122,26 @@ export function EthicsSection() {
       <h3 className="text-xl font-display font-bold text-slate-200 mb-6 relative z-10 border-b border-slate-800 pb-3">Conclusiones del Estudio</h3>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
         <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-5 block">
-          <ShieldCheck className="w-5 h-5 text-cyan-400 mb-3" />
-          <h4 className="text-slate-200 font-semibold mb-2">1. Invalidez Probatoria</h4>
+           <ShieldCheck className="w-5 h-5 text-cyan-400 mb-3" />
+          <h4 className="text-slate-200 font-semibold mb-2">1. No sirve como prueba definitiva</h4>
           <p className="text-slate-400 text-sm">
-             Los resultados del experimento con Quillbot (0% de sensibilidad ante IA moderna) demuestran su total invalidez como herramienta probatoria concluyente.
+             Dado que Quillbot no logró detectar casi ningún texto de IA levemente modificado, sus resultados no son pruebas fiables de que alguien hizo trampa.
           </p>
         </div>
 
         <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-5 block">
           <AlertOctagon className="w-5 h-5 text-fuchsia-400 mb-3" />
-          <h4 className="text-slate-200 font-semibold mb-2">2. Prohibición Punitiva</h4>
+          <h4 className="text-slate-200 font-semibold mb-2">2. Prohibición de Castigos Automáticos</h4>
           <p className="text-slate-400 text-sm">
-            Dada la tasa de fallos, está éticamente prohibido utilizar Quillbot automatizadamente como causal para sanciones disciplinarias, respetando el debido proceso (Heredia).
+            Al tener tantos fallos comprobados, es éticamente incorrecto usarlo para imponer sanciones o anular trabajos. Esto respeta la Declaración de Heredia sobre sanciones justas.
           </p>
         </div>
 
         <div className="bg-slate-900/50 border border-slate-700/50 rounded-xl p-5 block">
           <Info className="w-5 h-5 text-indigo-400 mb-3" />
-          <h4 className="text-slate-200 font-semibold mb-2">3. Amenaza a la Expresión</h4>
+          <h4 className="text-slate-200 font-semibold mb-2">3. Amenaza a la Libertad de Expresión</h4>
           <p className="text-slate-400 text-sm">
-            La censura delegada a algoritmos opacos crea un efecto inhibidor ("chilling effect") sobre los creadores, contraviniendo el espíritu de la Declaración de Chapultepec.
+            Permitir que un algoritmo con fallas acuse y censure el trabajo de los autores genera miedo de escribir. Esto rompe directamente con los Principios de Chapultepec.
           </p>
         </div>
       </div>
